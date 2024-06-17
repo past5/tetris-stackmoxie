@@ -104,31 +104,17 @@ function draw() {
 }
 
 function resetPlayer() {
-    player.matrix = createPiece();
-    player.pos.y = 0;
-    player.pos.x = Math.floor((arena[0].length / 2) - (player.matrix[0].length / 2));
-    if (collide(arena, player)) {
-        arena.forEach(row => row.fill(0));
-        gameOver = true;
+    if (blocksToFormText.length > 0) {
+        player.matrix = blocksToFormText.shift();
+        player.pos.y = 0;
+        player.pos.x = Math.floor((arena[0].length / 2) - (player.matrix[0].length / 2));
+        if (collide(arena, player)) {
+            gameOver = true;
+        }
     }
 }
 
-function createPiece() {
-    const pieces = [
-        [[1, 1, 1],
-         [0, 1, 0]],
-        [[1, 1],
-         [1, 1]],
-        [[0, 1, 1],
-         [1, 1, 0]],
-        [[1, 1, 0],
-         [0, 1, 1]],
-        [[1, 1, 1, 1]]
-    ];
-    return pieces[Math.floor(Math.random() * pieces.length)];
-}
-
-const arena = createMatrix(12, 20);
+const arena = createMatrix(20, 32);
 const player = {
     pos: { x: 0, y: 0 },
     matrix: null,
@@ -222,4 +208,3 @@ document.addEventListener('keydown', event => {
 
 resetPlayer();
 update();
-
